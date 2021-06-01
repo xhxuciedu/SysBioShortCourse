@@ -42,3 +42,46 @@ plt.xlabel("Dimension 1")
 plt.ylabel("Dimension 2")
 
 
+# TSNE ON PCA
+model_tsne = TSNE(learning_rate = 200, n_components = 2, random_state = 123, 
+                  perplexity = 90, n_iter = 1000, verbose = 1)
+tsne = model_tsne.fit_transform(x_train)
+plt.scatter(tsne[:, 0], tsne[:, 1], c = y_train, cmap = 'tab20', s = 10)
+plt.title('tSNE on PCA')
+plt.xlabel("tSNE1")
+plt.ylabel("tSNE2")
+
+# TSNE ON AUTOENCODER
+model = Sequential()
+model.add(Dense(10,     activation = 'elu', input_shape=(X.shape[1],)))
+model.add(Dense(8,      activation = 'elu'))
+model.add(Dense(6,      activation = 'elu'))
+model.add(Dense(4,      activation = 'linear', name = "bottleneck"))
+model.add(Dense(6,      activation = 'elu'))
+model.add(Dense(8,      activation = 'elu'))
+model.add(Dense(10,     activation = 'elu'))
+model.add(Dense(X.shape[1],   activation = 'sigmoid'))
+model.compile(loss = 'mean_squared_error', optimizer = Adam())
+model.fit(X, X, batch_size = 128, epochs = 100, shuffle = True, verbose = 1)
+encoder = Model(model.input, model.get_layer('bottleneck').output)
+bottleneck_representation = encoder.predict(X)
+
+model_tsne_auto = TSNE(learning_rate = 200, n_components = 2, random_state = 123, 
+                       perplexity = 90, n_iter = 1000, verbose = 1)
+tsne_auto = model_tsne_auto.fit_transform(bottleneck_representation)
+plt.scatter(tsne_auto[:, 0], tsne_auto[:, 1], c = Y, cmap = 'tab20', s = 10)
+plt.title('tSNE on Autoencoder: 8 Layers')
+plt.xlabel("tSNE1")
+plt.ylabel("tSNE2")
+
+from umap import UMAP
+model = UMAP(n_neighbors = 30, min_dist = 0.3, n_components = 2)
+umap = model.fit_transform(X_reduced)
+umap_coords = pd.DataFrame({'UMAP1':umap[:, 0], 'UMAP2':umap[:, 1]})
+umap_coords.to_csv('umap_coords_10X_1.3M_MouseBrain.txt', sep='\t')
+plt.scatter(umap[:, 0], umap[:, 1], c = Y, cmap = 'tab20', s = 1)
+plt.title('UMAP')
+plt.xlabel("UMAP1")
+plt.ylabel("UMAP2")
+
+
