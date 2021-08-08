@@ -30,3 +30,6 @@ Machine learning: a probabilistic perspective
 Kevin Murphy
 https://www.cs.ubc.ca/~murphyk/MLbook/
 
+Deep Learning
+Ian Goodfellow and Yoshua Bengio and Aaron Courville
+https://www.deeplearningbook.org/
