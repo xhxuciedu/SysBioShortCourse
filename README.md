@@ -22,14 +22,14 @@ https://docs.anaconda.com/anaconda/install/
 
 References:
 
-The Elements of  Statistical Learning: Data Mining, Inference, and Prediction.
+** The Elements of  Statistical Learning: Data Mining, Inference, and Prediction.
 T. Hastie, R. Tibshirani, J. Friedman
 http://statweb.stanford.edu/~tibs/ElemStatLearn/
 
-Machine learning: a probabilistic perspective
+** Machine learning: a probabilistic perspective
 Kevin Murphy
 https://www.cs.ubc.ca/~murphyk/MLbook/
 
-Deep Learning
+** Deep Learning
 Ian Goodfellow and Yoshua Bengio and Aaron Courville
 https://www.deeplearningbook.org/
